@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Egypt Protest Analysis</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1 { color: #2c3e50; }
+        a { color: #3498db; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .container { background: #f5f5f5; padding: 20px; border-radius: 5px; }
+        .button {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 10px 0;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background: #2980b9;
+            text-decoration: none;
+        }
+        img { max-width: 100%; height: auto; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>📊 Egypt Protest Analysis</h1>
+    
+    <div class="container">
+        <h2>Welcome</h2>
+        <p>This project analyzes protest events in Egypt using ACLED (Armed Conflict Location and Event Data) to understand trends, patterns, and impacts of demonstrations.</p>
+        
+        <h2>View the Analysis</h2>
+        <p>The main analysis is in <strong>bella_copia.ipynb</strong>. Choose a viewing option:</p>
+        
+        <ul>
+            <li>
+                <strong><a href="https://nbviewer.jupyter.org/github/camilla477/draft_egypt_protests/blob/main/bella_copia.ipynb" target="_blank">View on nbviewer 📓</a></strong> 
+                (Recommended - best notebook rendering)
+            </li>
+            <li>
+                <strong><a href="https://github.com/camilla477/draft_egypt_protests/blob/main/bella_copia.ipynb" target="_blank">View on GitHub 🐙</a></strong>
+                (Basic notebook preview)
+            </li>
+            <li>
+                <strong>View locally:</strong>
+                <pre>git clone https://github.com/camilla477/draft_egypt_protests.git
+cd draft_egypt_protests
+jupyter notebook bella_copia.ipynb</pre>
+            </li>
+        </ul>
+
+        <h2>Datasets</h2>
+        <ul>
+            <li><strong>ACLED_egypt2011.csv</strong> - 2011 Protest Events</li>
+            <li><strong>ACLED_alsisi.csv</strong> - Alsisi Period Protest Events</li>
+        </ul>
+
+        <h2>Project Files</h2>
+        <ul>
+            <li>bella_copia.ipynb - Main analysis notebook</li>
+            <li>ACLED data files (.csv)</li>
+            <li>Visualization charts (.png)</li>
+        </ul>
+
+        <h2>Quick Links</h2>
+        <ul>
+            <li><a href="https://github.com/camilla477/draft_egypt_protests" target="_blank">View on GitHub Repository</a></li>
+            <li><a href="https://acleddata.com/" target="_blank">ACLED Project Website</a></li>
+        </ul>
+    </div>
+
+    <footer style="margin-top: 40px; text-align: center; color: #666; border-top: 1px solid #ddd; padding-top: 20px;">
+        <p>Created with Jupyter Notebook | Published on GitHub Pages</p>
+    </footer>
+</body>
+</html>
