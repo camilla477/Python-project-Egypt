@@ -3,85 +3,370 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Egypt Protest Analysis</title>
+    <title>Egypt Protest Analysis Report</title>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
         }
-        h1 { color: #2c3e50; }
-        a { color: #3498db; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .container { background: #f5f5f5; padding: 20px; border-radius: 5px; }
-        .button {
-            display: inline-block;
-            background: #3498db;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            margin: 10px 0;
-            transition: background 0.3s;
+            padding: 40px 20px;
+            text-align: center;
         }
-        .button:hover {
-            background: #2980b9;
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+        }
+        .section p {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 1em;
+            line-height: 1.8;
+        }
+        .chart-container {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 500px;
+            border: 1px solid #dee2e6;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        .stat-card h3 {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .stat-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        footer a {
+            color: #3498db;
             text-decoration: none;
         }
-        img { max-width: 100%; height: auto; margin: 20px 0; }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .source {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            color: #2c3e50;
+        }
+        ul {
+            margin-left: 30px;
+            line-height: 2;
+        }
+        li {
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
-    <h1>📊 Egypt Protest Analysis</h1>
-    
     <div class="container">
-        <h2>Welcome</h2>
-        <p>This project analyzes protest events in Egypt using ACLED (Armed Conflict Location and Event Data) to understand trends, patterns, and impacts of demonstrations.</p>
+        <header>
+            <h1>Egypt Protest Analysis 🇪🇬</h1>
+            <p>Comparative Analysis: Arab Spring (2011) vs. 2019-2020 Protests</p>
+        </header>
         
-        <h2>View the Analysis</h2>
-        <p>The main analysis is in <strong>bella_copia.ipynb</strong>. Choose a viewing option:</p>
+        <div class="content">
+            <!-- Overview Section -->
+            <div class="section">
+                <h2>📊 Overview</h2>
+                <p>
+                    This report presents an interactive analysis of protest events in Egypt during two critical periods:
+                    the Arab Spring (2011) and the 2019-2020 protest movement. The data comes from the Armed Conflict
+                    Location & Event Data (ACLED) project and includes information on protest locations, types,
+                    subtypes, and temporal patterns.
+                </p>
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3>Total Events 2011</h3>
+                        <div class="value">3,627</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Events 2019-20</h3>
+                        <div class="value">2,108</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Top Governorate</h3>
+                        <div class="value">Cairo</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Yearly Trends Section -->
+            <div class="section">
+                <h2>📅 Yearly Percentage Trends</h2>
+                <p>
+                    This chart shows the percentage distribution of protest subtypes by period. Key insight: 
+                    In 2011, peaceful protests dominated (51.2%), while in 2019-2020, riots increased significantly (37.4%).
+                </p>
+                <div class="chart-container">
+                    <div id="yearlyChart"></div>
+                </div>
+                <p style="font-size: 0.9em; color: #888; margin-top: 15px;">
+                    💡 <strong>Tip:</strong> Hover over bars to see exact percentages. Click legend items to toggle visibility.
+                </p>
+            </div>
+
+            <!-- Governorate Comparison Section -->
+            <div class="section">
+                <h2>🗺️ Geographic Distribution by Governorate</h2>
+                <p>
+                    Below is a detailed comparison of protest events across major governorates. Cairo clearly leads 
+                    in both periods, with Giza and Beheira as secondary centers of protest activity.
+                </p>
+                <div class="chart-container">
+                    <div id="governorateChart"></div>
+                </div>
+            </div>
+
+            <!-- Subtype Comparison -->
+            <div class="section">
+                <h2>📈 Event Subtypes Over Time</h2>
+                <p>
+                    This chart compares the raw event counts by major subtype categories, highlighting how the 
+                    nature of protests shifted between the two periods.
+                </p>
+                <div class="chart-container">
+                    <div id="subtypeChart"></div>
+                </div>
+            </div>
+
+            <!-- Key Findings Section -->
+            <div class="section">
+                <h2>🔍 Key Findings</h2>
+                <ul>
+                    <li><strong>Shift from Peaceful to Confrontational:</strong> Peaceful protests decreased from 51.2% (2011) to 35.3% (2019-2020), while riots increased from 24.9% to 37.4%.</li>
+                    <li><strong>Geographic Concentration:</strong> Cairo dominated both periods with 1,457 events (2011) and 1,124 events (2019-2020).</li>
+                    <li><strong>Strategic Activities Rising:</strong> Strategic developments increased from 5.9% (2011) to 14% (2019-2020).</li>
+                    <li><strong>Reduced Overall Activity:</strong> Total events declined by 42% from 2011 to 2019-2020, suggesting fewer but more intense protests.</li>
+                </ul>
+            </div>
+
+            <!-- Data Sources Section -->
+            <div class="section">
+                <h2>📚 Data Sources & Resources</h2>
+                <p>All data in this report comes from the Armed Conflict Location & Event Data (ACLED) project:</p>
+                <div class="source">
+                    <strong>CSV Files:</strong>
+                    <ul style="margin-top: 10px;">
+                        <li><strong>ACLED_egypt2011.csv</strong> – 3,627 events from the Arab Spring period</li>
+                        <li><strong>ACLED_alsisi.csv</strong> – 2,108 events from the 2019-2020 period</li>
+                    </ul>
+                </div>
+                <p style="margin-top: 20px;">
+                    For deeper exploration and custom analysis, access the full Jupyter notebooks:
+                </p>
+                <ul style="margin-top: 10px;">
+                    <li><strong>02_data_exploration.ipynb</strong> – Data cleaning, missing value analysis, and visualizations</li>
+                    <li><strong>03_data_analysis.ipynb</strong> – Comparative analysis, governorate insights, and temporal patterns</li>
+                </ul>
+            </div>
+        </div>
         
-        <ul>
-            <li>
-                <strong><a href="https://nbviewer.jupyter.org/github/camilla477/draft_egypt_protests/blob/main/bella_copia.ipynb" target="_blank">View on nbviewer 📓</a></strong> 
-                (Recommended - best notebook rendering)
-            </li>
-            <li>
-                <strong><a href="https://github.com/camilla477/draft_egypt_protests/blob/main/bella_copia.ipynb" target="_blank">View on GitHub 🐙</a></strong>
-                (Basic notebook preview)
-            </li>
-            <li>
-                <strong>View locally:</strong>
-                <pre>git clone https://github.com/camilla477/draft_egypt_protests.git
-cd draft_egypt_protests
-jupyter notebook bella_copia.ipynb</pre>
-            </li>
-        </ul>
-
-        <h2>Datasets</h2>
-        <ul>
-            <li><strong>ACLED_egypt2011.csv</strong> - 2011 Protest Events</li>
-            <li><strong>ACLED_alsisi.csv</strong> - Alsisi Period Protest Events</li>
-        </ul>
-
-        <h2>Project Files</h2>
-        <ul>
-            <li>bella_copia.ipynb - Main analysis notebook</li>
-            <li>ACLED data files (.csv)</li>
-            <li>Visualization charts (.png)</li>
-        </ul>
-
-        <h2>Quick Links</h2>
-        <ul>
-            <li><a href="https://github.com/camilla477/draft_egypt_protests" target="_blank">View on GitHub Repository</a></li>
-            <li><a href="https://acleddata.com/" target="_blank">ACLED Project Website</a></li>
-        </ul>
+        <footer>
+            <p>Egypt Protest Analysis Report | Data Source: ACLED | Generated: 2026-04-29</p>
+            <p>Interactive visualizations powered by <strong>Plotly</strong> | <a href="https://github.com/camilla477/Python-project-Egypt" target="_blank">GitHub Repository</a></p>
+        </footer>
     </div>
 
-    <footer style="margin-top: 40px; text-align: center; color: #666; border-top: 1px solid #ddd; padding-top: 20px;">
-        <p>Created with Jupyter Notebook | Published on GitHub Pages</p>
-    </footer>
+    <script>
+        // ============ CHART 1: YEARLY TRENDS ============
+        const yearlyData = [
+            {
+                x: ['Arab Spring 2011', '2019-2020'],
+                y: [51.2, 35.3],
+                name: 'Protests',
+                type: 'bar',
+                marker: { color: '#3498db' },
+                text: ['51.2%', '35.3%'],
+                textposition: 'inside',
+                textfont: { color: 'white', size: 12 }
+            },
+            {
+                x: ['Arab Spring 2011', '2019-2020'],
+                y: [24.9, 37.4],
+                name: 'Riots',
+                type: 'bar',
+                marker: { color: '#e74c3c' },
+                text: ['24.9%', '37.4%'],
+                textposition: 'inside',
+                textfont: { color: 'white', size: 12 }
+            },
+            {
+                x: ['Arab Spring 2011', '2019-2020'],
+                y: [5.9, 14.0],
+                name: 'Strategic developments',
+                type: 'bar',
+                marker: { color: '#f39c12' },
+                text: ['5.9%', '14.0%'],
+                textposition: 'inside',
+                textfont: { color: 'white', size: 11 }
+            },
+            {
+                x: ['Arab Spring 2011', '2019-2020'],
+                y: [18.0, 13.3],
+                name: 'Other subtypes',
+                type: 'bar',
+                marker: { color: '#95a5a6' },
+                text: ['18.0%', '13.3%'],
+                textposition: 'inside',
+                textfont: { color: 'white', size: 11 }
+            }
+        ];
+        
+        const yearlyLayout = {
+            title: { text: 'Protest Subtype Distribution by Period', font: { size: 18 } },
+            barmode: 'stack',
+            xaxis: { title: 'Period', tickfont: { size: 12 } },
+            yaxis: { title: 'Percentage (%)', tickfont: { size: 12 } },
+            hovermode: 'x unified',
+            margin: { t: 60, b: 60, l: 80, r: 40 },
+            plot_bgcolor: '#f8f9fa',
+            paper_bgcolor: 'white',
+            font: { family: 'Segoe UI, sans-serif', size: 12 },
+            legend: { y: 1.0, x: 1.0 }
+        };
+        
+        Plotly.newPlot('yearlyChart', yearlyData, yearlyLayout, { responsive: true });
+
+        // ============ CHART 2: GOVERNORATE COMPARISON ============
+        const govData = [
+            {
+                x: ['Cairo 2011', 'Giza 2011', 'Beheira 2011', 'Cairo 2020', 'Giza 2020', 'Beheira 2020'],
+                y: [1457, 516, 218, 1124, 476, 208],
+                name: 'Event Count',
+                type: 'bar',
+                marker: {
+                    color: ['#3498db', '#3498db', '#3498db', '#667eea', '#667eea', '#667eea']
+                },
+                text: ['1457', '516', '218', '1124', '476', '208'],
+                textposition: 'outside',
+                textfont: { size: 11 }
+            }
+        ];
+        
+        const govLayout = {
+            title: { text: 'Event Distribution: Top Governorates', font: { size: 18 } },
+            xaxis: { title: 'Governorate & Period', tickfont: { size: 11 }, tickangle: -45 },
+            yaxis: { title: 'Number of Events', tickfont: { size: 12 } },
+            hovermode: 'x unified',
+            margin: { t: 60, b: 100, l: 80, r: 40 },
+            plot_bgcolor: '#f8f9fa',
+            paper_bgcolor: 'white',
+            font: { family: 'Segoe UI, sans-serif', size: 12 },
+            showlegend: false
+        };
+        
+        Plotly.newPlot('governorateChart', govData, govLayout, { responsive: true });
+
+        // ============ CHART 3: SUBTYPE BREAKDOWN ============
+        const subtypeData = [
+            {
+                x: ['Protests', 'Riots', 'Strategic\nDevelopments', 'Other'],
+                y: [1857, 902, 214, 654],
+                name: '2011',
+                type: 'bar',
+                marker: { color: '#3498db' },
+                text: ['1857', '902', '214', '654'],
+                textposition: 'outside',
+                textfont: { size: 10 }
+            },
+            {
+                x: ['Protests', 'Riots', 'Strategic\nDevelopments', 'Other'],
+                y: [745, 789, 296, 278],
+                name: '2019-2020',
+                type: 'bar',
+                marker: { color: '#e74c3c' },
+                text: ['745', '789', '296', '278'],
+                textposition: 'outside',
+                textfont: { size: 10 }
+            }
+        ];
+        
+        const subtypeLayout = {
+            title: { text: 'Event Counts by Subtype (2011 vs 2019-2020)', font: { size: 18 } },
+            barmode: 'group',
+            xaxis: { title: 'Subtype', tickfont: { size: 11 } },
+            yaxis: { title: 'Number of Events', tickfont: { size: 12 } },
+            hovermode: 'x unified',
+            margin: { t: 60, b: 80, l: 80, r: 40 },
+            plot_bgcolor: '#f8f9fa',
+            paper_bgcolor: 'white',
+            font: { family: 'Segoe UI, sans-serif', size: 12 },
+            legend: { y: 1.0, x: 1.0 }
+        };
+        
+        Plotly.newPlot('subtypeChart', subtypeData, subtypeLayout, { responsive: true });
+    </script>
 </body>
 </html>

@@ -15,7 +15,7 @@ Analysis of protest events in Egypt using ACLED data.
 This notebook is published on GitHub Pages for easy viewing in your browser.
 
 ### Option 2: Local Viewing
-1. Clone this repository
+1. Clone this repository 
 2. Install Jupyter: `pip install jupyter`
 3. Run: `jupyter notebook bella_copia.ipynb`
 
